@@ -5,34 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ManualArmCommand;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.commands.DriveArcadeCommand;
+package frc.robot; //packages are just directories in which you can put Java files
+// belwo we're importing other Java classes we want to use in Robot.java
+import edu.wpi.first.cameraserver.CameraServer;  //this class is for the webcam
+import edu.wpi.first.wpilibj.DigitalInput;  // for limit switches which are either on or off, 1 or o so they are considered digital
+import edu.wpi.first.wpilibj.Encoder;  // for the motion encoder that is part of the versaplanetary gearbox
+import edu.wpi.first.wpilibj.TimedRobot;  
+import edu.wpi.first.wpilibj.command.Command;  
+import edu.wpi.first.wpilibj.command.Scheduler;  
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser; 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;  
+//import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ManualArmCommand;  //Command created by us to run arm
+import frc.robot.subsystems.Arm;  //Arm subsystem created
+import frc.robot.subsystems.Drivetrain;  //Drivetrain subsystem created
+//import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.DriveArcadeCommand;  //Drive command created
 //import edu.wpi.first.wpilibj.Timer;
 
 /**
- * The VM is configured to automatically run this class, and to call the
+ * The VM (Java Virtual Machine) is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
-  public static Drivetrain m_drivetrain = null;
+public class Robot extends TimedRobot {  //TimedRobot is a type of Robot and inherits all functionality from Robot
+  //public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  public static Drivetrain m_drivetrain = null;  //creating new instances (light blue) of the classes (teal)
   public static Arm m_Arm = null;
   public static OI m_oi;
   public static Encoder enc;
@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     CameraServer.getInstance().startAutomaticCapture();
-    enc = new Encoder(9, 10, false, Encoder.EncodingType.k4X);
+    enc = new Encoder(9, 10, false, Encoder.EncodingType.k4X);  // Setup values for encoder
     enc.setMaxPeriod(.1);
     enc.setMinRate(10);
     enc.setDistancePerPulse(5);
@@ -73,16 +73,10 @@ public class Robot extends TimedRobot {
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
+   * <p>This runs after the mode-specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
 
-/*sampleEncoder.setMaxPeriod(.1);
-samepleEncoder.setMiniRate(10);
-sampleEncoder.setDistancePerPulse(5);
-sampleEncoder.setReverseDirection(true);
-sampleEncoder.setSamplesToAverage(7);
-*/
 
   @Override
   public void robotPeriodic() {
@@ -125,10 +119,10 @@ sampleEncoder.setSamplesToAverage(7);
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null) {  //if there is not a selection that points to nothing, start autonomous
       m_autonomousCommand.start();
     }
-    m_drivetrain.setDefaultCommand(new DriveArcadeCommand());
+    m_drivetrain.setDefaultCommand(new DriveArcadeCommand());  //otherwise run the commands DriveArcade and ManualArmCommand
     m_Arm.setDefaultCommand(new ManualArmCommand());
   }
 
